@@ -1,5 +1,6 @@
 # Passport OCR Scanner with VietOCR
 
+
 ## Project Overview
 This project implements an OCR (Optical Character Recognition) scanner for extracting key fields from passport images, such as names, date of birth, country, gender, and passport number. The system leverages the power of [VietOCR](https://github.com/pbcquoc/vietocr) for training and testing on a custom dataset formatted in COCO-style annotations.
 
@@ -7,6 +8,7 @@ The project includes:
 - **Data Preparation**: Splitting the dataset into training and testing sets, cropping text regions from images, and generating annotation files compatible with VietOCR.
 - **OCR Model Training**: Training the OCR model on cropped passport text fields using the `vgg_transformer` configuration.
 - **Evaluation**: Evaluating model performance on the test dataset to measure accuracy.
+
 
 ## Installation
 
@@ -73,6 +75,7 @@ trainer.train()
 ### Step 5: Evaluate the Model
 After training, evaluate the model on the test dataset. Use the provided evaluation script to compute accuracy and visualize predictions.
 
+
 ## File Structure (example)
 ```
 PassportDataset/
@@ -96,6 +99,32 @@ PassportDataset/
 │   ├── test_annotation.txt
 ```
 
+
+## Analysis of Training Results
+
+1. **Training and Validation Loss Trends**:
+   - **Training Loss**: Stabilized at around `0.612` after the initial iterations.
+   - **Validation Loss**: Fluctuates slightly but remains in the range of `0.600 - 0.650`. This is a positive sign as the validation loss doesn't significantly increase, suggesting no major overfitting.
+
+2. **Accuracy**:
+   - **Full Sequence Accuracy (Full Seq)**:
+     - Early iterations: `0.8438` (84.38%)
+     - Final iteration: `0.9688` (96.88%)
+   - **Per-Character Accuracy (Per Char)**:
+     - Early iterations: `0.8624` (86.24%)
+     - Final iteration: `0.9688` (96.88%)
+   - The significant increase in accuracy suggests the model effectively learned the patterns in your dataset.
+
+3. **Validation Results**:
+   - The validation accuracy and loss at various points indicate the model generalizes well to unseen data, with consistent improvements in both metrics during training.
+
+4. **Convergence**:
+   - Both the training and validation losses have plateaued, indicating the model has likely reached its optimal performance for the current configuration and dataset size.
+
+5. **Learning Rate**:
+   - The learning rate decayed steadily during training, starting from `3e-4` to near-zero by the final iteration (`1.24e-9`), which is expected and helps stabilize the model in later training stages.
+
+
 ## Key Dependencies
 - **VietOCR**: A deep learning-based OCR framework.
 - **Pillow**: Image processing for cropping and saving passport fields.
@@ -103,7 +132,11 @@ PassportDataset/
 - **labelme2coco**: To convert dataset annotations into COCO format.
 - **imgaug**: Augmentation library for enhancing the dataset.
 
+
+## Google Collab Notebook
+[Collab URL](https://colab.research.google.com/drive/1sZmpSJiAb6y3ciqwRzJPdgVEjk7bLZt3?usp=sharing)
+
 ## Acknowledgement of Dataset
 The original dataset belongs to:
-[https://github.com/iAmmarTahir/MASK-RCNN-Dataset/tree/master/PakCNIC/Augmented](https://github.com/iAmmarTahir/MASK-RCNN-Dataset/tree/master/PakCNIC/Augmented)
+[iAmmarTahir/MASK-RCNN-Dataset](https://github.com/iAmmarTahir/MASK-RCNN-Dataset/tree/master/PakCNIC/Augmented)
 

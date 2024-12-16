@@ -3,7 +3,7 @@
 # VietOCR requires training data in a specific format:
 Each image should have its corresponding ground truth text in a .txt file.
 The annotation format must align with the structure expected by the OCR model.
-# Will need to do this
+# TODO:
 Extract Text Annotations: Parse the JSON annotations to extract the bbox (bounding boxes) for each text field, crop those regions from the images, and associate them with their respective text labels (e.g., firstname, lastname, dob).
 '''
 

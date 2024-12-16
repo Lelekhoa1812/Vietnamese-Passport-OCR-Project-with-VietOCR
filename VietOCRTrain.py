@@ -1,17 +1,15 @@
 # CUSTOM AUGMENTOR
 from imgaug import augmenters as iaa
 from vietocr.loader.aug import ImgAugTransform
+from vietocr.tool.config import Cfg
 
 class MyAugmentor(ImgAugTransform):
     def __init__(self):
         self.aug = iaa.Sequential([
-            iaa.GaussianBlur(sigma=(0, 1.0)),
-            iaa.AdditiveGaussianNoise(scale=(0, 0.05 * 255)),
+            iaa.GaussianBlur(sigma=(0, 0.5)), # Blur intensity reduced
+            iaa.AdditiveGaussianNoise(scale=(0, 0.02 * 255)), # Noise intensity reduced
         ])
-
-config['device'] = 'cuda:0'  # Use GPU; change to 'cpu' if GPU is unavailable
-trainer = Trainer(config, pretrained=True, augmentor=MyAugmentor())  # Use custom augmentation
-
+        
 
 # TRAIN DATASET
 from vietocr.tool.config import Cfg
@@ -35,8 +33,9 @@ config = Cfg.load_config_from_name('vgg_transformer')
 dataset_params = {
     'name': 'passport',  # Dataset name
     'data_root': 'PassportDataset',  # Root folder
+    # 'data_root': '/content/drive/My Drive/OCRTraining/PassportDataset',  # For Google Drive
     'train_annotation': 'train/train_annotation.txt',  # Train annotation file
-    'valid_annotation': 'test/test_annotation.txt'    # Validation annotation file
+    'valid_annotation': 'test/test_annotation.txt'     # Validation annotation file
 }
 
 # SAMPLE
@@ -53,6 +52,7 @@ params = {
     'valid_every': 500,  # Validate every 500 iterations
     'iters': 5000,  # Number of iterations for training
     'export': './weights/passportocr.pth',  # Path to save the model
+    # 'export': '/content/drive/My Drive/OCRTraining/PassportDataset/weights/passportocr.pth',  # For Google Drive
     'metrics': 20  # Number of test samples used for evaluation
 }
 
@@ -63,9 +63,10 @@ config['device'] = 'cuda:0' # Device to train model, change to cpu if cannot use
 
 # Train the model from pretrained model will produce better outcome, especially casing small dataset
 # To use custom augmentation, can use Trainer(config, pretrained=True, augmentor=MyAugmentor()) with the given example.
-trainer = Trainer(config, pretrained=True)
+trainer = Trainer(config, pretrained=True, augmentor=MyAugmentor())
 
 trainer.visualize_dataset()  # Optional: visualize dataset samples with augmentations
 trainer.train()  # Train the model
 trainer.visualize_prediction()  # Optional: visualize model predictions after training
+# trainer.config.save('/content/drive/My Drive/OCRTraining/PassportDataset/config.yml')  # For Google Drive
 trainer.config.save('config.yml')  # Save configuration for later use
