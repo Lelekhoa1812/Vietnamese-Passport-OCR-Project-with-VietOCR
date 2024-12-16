@@ -1,4 +1,4 @@
-# Passport OCR Scanner with VietOCR
+# Passport OCR Scanner with VietOCR Transformer
 
 
 ## Project Overview
