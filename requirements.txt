@@ -1,0 +1,11 @@
+# General dependencies
+Pillow>=9.0.0  # For image processing
+torch>=2.0.0  # Ensure compatibility with Python 3.11 and GPU support
+# torch>=2.0.0+cu118 # If using torch with cuda
+
+# Dataset and augmentation tools
+labelme2coco>=0.1.7  # For LabelMe to COCO format conversion
+imgaug>=0.4.0  # For image augmentations
+
+# VietOCR and its dependencies
+vietocr>=0.3.4  # OCR tool
