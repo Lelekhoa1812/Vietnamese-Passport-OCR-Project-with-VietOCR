@@ -9,3 +9,11 @@ imgaug>=0.4.0  # For image augmentations
 
 # VietOCR and its dependencies
 vietocr>=0.3.4  # OCR tool
+
+# Additional Dependencies for Synthetic Data Generation
+faker>=13.0.0  # For generating random synthetic data
+opencv-python>=4.5.0  # OpenCV for image processing
+numpy>=1.21.0  # Numerical computations
+requests>=2.26.0  # HTTP requests for font downloads
+multiprocessing-logging>=0.3.1  # Logging with multiprocessing support
+jsonschema>=4.0.0  # JSON validation
