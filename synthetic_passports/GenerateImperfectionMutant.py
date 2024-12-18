@@ -4,10 +4,11 @@ The set of passport data could be split into different sectional aspects:
 - Blurred: Add noise to simulate out-worn physical passport
 - Angled: Place the passport in a diagonal direction, not necessarily being in any fixed angle (i.e., right angled)
 - Brightening: Under or over lighting or shadowing the image could simulate real-life light situation of the passport can be imperfect
-- Mixed: Mixing mutation technique by any 3 of the aboves.
+- Mixed: Mixing mutation technique by any 3 (can be any combined from 2-3) of the aboves.
 Soft grouping the dataset to process mutation technique applied randomly on selective files
 '''
 
+# Imports
 import os
 import cv2
 import random
@@ -22,13 +23,15 @@ output_folder = os.path.join(root_path, "mutated_passports")
 os.makedirs(output_folder, exist_ok=True)
 
 # List all input images
-input_images = [f for f in os.listdir(input_folder) if f.endswith(".jpg")]
+input_images = [f for f in os.listdir(input_folder) if f.endswith(".jpg")] # The project only works with jpg image
 
 # Mutation techniques
+# Algorithm to apply Gaussian blurring technique
 def apply_blur(image):
     """Apply Gaussian blur to simulate out-worn passports."""
     return cv2.GaussianBlur(image, (5, 5), random.uniform(1.0, 3.0))
 
+# Algorithm to rotate the image by an angle to apply mutation (from -20 to 20 deg from the original right angled)
 def apply_angle(image):
     """Rotate image to a random diagonal angle."""
     angle = random.randint(-20, 20)
@@ -36,6 +39,7 @@ def apply_angle(image):
     M = cv2.getRotationMatrix2D((w // 2, h // 2), angle, 1.0)
     return cv2.warpAffine(image, M, (w, h), borderMode=cv2.BORDER_CONSTANT, borderValue=(255, 255, 255))
 
+# Algorithm to rotate the image by an angle to apply mutation (from 50% darker to 50% brighter)
 def apply_brightness(image):
     """Randomly adjust the brightness of the image."""
     factor = random.uniform(0.5, 1.5)  # Brightness factor between 0.5 (darker) to 1.5 (brighter)
@@ -44,11 +48,13 @@ def apply_brightness(image):
     enhanced_image = enhancer.enhance(factor)
     return cv2.cvtColor(np.array(enhanced_image), cv2.COLOR_RGB2BGR)
 
+# Algorithm to apply a combination of any 2-3 mutation
 def apply_mixed(image):
-    """Apply any 3 mutations: blurred, angled, brightness."""
+    """Apply any 2 or 3 mutations: blurred, angled, brightness."""
     techniques = [apply_blur, apply_angle, apply_brightness]
     random.shuffle(techniques)
-    for i in range(3):
+    num_techniques = random.choice([2, 3])  # Randomly choose to apply 2 or 3 techniques
+    for i in range(num_techniques):
         image = techniques[i](image)
     return image
 
@@ -59,7 +65,7 @@ def mutate_image(image_path, mutation_type, output_path):
         print(f"Error loading image: {image_path}")
         return
     
-    # Apply mutation
+    # Apply mutation (random picks was chosen from process_image)
     if mutation_type == "blurred":
         mutated_image = apply_blur(image)
     elif mutation_type == "angled":

@@ -51,7 +51,7 @@ This script applies the following transformations to synthetic images:
 - **Blurred**: Simulates out-worn or scanned passports.
 - **Angled**: Rotates the image to a random diagonal angle.
 - **Brightened**: Simulates over or under-lighting conditions.
-- **Mixed**: Applies a combination of blur, angle, and brightness adjustments.
+- **Mixed**: Applies a combination of 2 or 3 techniques mentioned, blur, angle, and brightness adjustments.
 
 The final dataset consists of:
 - **2000 Generic Passports**
@@ -163,3 +163,5 @@ python inference_orientation_correct.py
 
 [Synthetic Passport Generation](https://colab.research.google.com/drive/1Al4w8ccJxCnMTSFeYEuMXewpzhBO8AgF?usp=sharing)
 
+## Google Drive Dataset
+[Dataset](https://drive.google.com/drive/folders/1WUuXciJYsFgsY81KnibXRKDxninKg0bu?usp=sharing)
