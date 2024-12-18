@@ -166,5 +166,7 @@ python inference_orientation_correct.py
 
 [Synthetic Passport Generation](https://colab.research.google.com/drive/1Al4w8ccJxCnMTSFeYEuMXewpzhBO8AgF?usp=sharing)
 
+[Annotate Image with PaddleOCR (older model)](https://colab.research.google.com/drive/1wgoY08-Dmp7hmBYhXVni3iFTfYclITht?usp=sharing)
+
 ## Google Drive Dataset
 [Dataset](https://drive.google.com/drive/folders/1WUuXciJYsFgsY81KnibXRKDxninKg0bu?usp=sharing)
