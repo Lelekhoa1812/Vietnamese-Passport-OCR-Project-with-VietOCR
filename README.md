@@ -122,6 +122,9 @@ python inference_orientation_correct.py
 │       ├── crops/
 │       └── test_annotation.txt
 ├── synthetic_passports/   # 5000 generated synthetic passports
+│   └── labels.txt                   # All labels of the faked data generated previously.
+│   └── passport_index.jpg           # Generic passport
+│   └── vpassport_index.jpg          # Vietnamese passport (both printed and handwritten)
 │   └── template           
 │         └── passport_template.jpg  # Template background passport img blurred selective fields
 │         └── passport_template.json # Labelme annotation for the passport img with polygonized regions
