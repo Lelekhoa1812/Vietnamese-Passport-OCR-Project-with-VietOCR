@@ -1,5 +1,6 @@
 # Passport OCR Scanner with VietOCR Transformer
 
+
 ## Project Overview
 This project implements an OCR (Optical Character Recognition) scanner for extracting key fields from passport images, such as names, date of birth, country, gender, and passport number. The system leverages the power of [VietOCR](https://github.com/pbcquoc/vietocr) for training and testing on a custom dataset formatted in COCO-style annotations.
 
@@ -9,6 +10,7 @@ The project includes:
 - **Synthetic Data Generation**: A hybrid approach using Python scripts to generate **5000 synthetic passport samples**.
 - **Input Orientation Handling**: Automatic correction of image orientation (90°, 180°, 270° rotations) to ensure proper alignment for OCR.
 - **Evaluation**: Evaluating model performance on the test dataset to measure accuracy.
+
 
 ## Installation
 
@@ -106,6 +108,7 @@ trainer.train()
 ### Step 6: Evaluate the Model
 Evaluate the trained model using the test dataset and provided evaluation scripts. Results include accuracy metrics and visualized predictions.
 
+
 ## Inference with Orientation Correction
 Use the following script to perform inference with real-time orientation correction:
 ```python
@@ -139,6 +142,7 @@ python inference_orientation_correct.py
 ├── README
 └── LICENSE
 ```
+ 
 
 ## Analysis of Training Results
 1. **Training and Validation Loss**:
@@ -152,6 +156,7 @@ python inference_orientation_correct.py
 3. **Synthetic Data Impact**:
    - The hybrid dataset (synthetic + augmented imperfections) significantly improved accuracy.
 
+
 ## Key Dependencies
 - **VietOCR**: Deep learning-based OCR framework.
 - **Pillow**: Image processing for generating synthetic passports.
@@ -161,12 +166,17 @@ python inference_orientation_correct.py
 - **PyTorch**: Training deep learning models.
 
 
+## Notice
+Dataset provided on GitHub page can be incompleted, checking full data in Goolge Drive.
+
+
 ## Google Collab Notebook
 [Training Collab URL](https://colab.research.google.com/drive/1sZmpSJiAb6y3ciqwRzJPdgVEjk7bLZt3?usp=sharing)
 
 [Synthetic Passport Generation](https://colab.research.google.com/drive/1Al4w8ccJxCnMTSFeYEuMXewpzhBO8AgF?usp=sharing)
 
 [Annotate Image with PaddleOCR (older model)](https://colab.research.google.com/drive/1wgoY08-Dmp7hmBYhXVni3iFTfYclITht?usp=sharing)
+
 
 ## Google Drive Dataset
 [Dataset](https://drive.google.com/drive/folders/1WUuXciJYsFgsY81KnibXRKDxninKg0bu?usp=sharing)
