@@ -1,7 +1,7 @@
 # General dependencies
 Pillow>=9.0.0  # For image processing
 torch>=2.0.0  # Ensure compatibility with Python 3.11 and GPU support
-# torch>=2.0.0+cu118 # If using torch with cuda
+# torch>=2.0.0+cu118  # If using torch with CUDA
 
 # Dataset and augmentation tools
 labelme2coco>=0.1.7  # For LabelMe to COCO format conversion
@@ -12,8 +12,19 @@ vietocr>=0.3.4  # OCR tool
 
 # Additional Dependencies for Synthetic Data Generation
 faker>=13.0.0  # For generating random synthetic data
-opencv-python>=4.5.0  # OpenCV for image processing
+opencv-python-headless>=4.5.0  # OpenCV for image processing (headless for server environments)
 numpy>=1.21.0  # Numerical computations
 requests>=2.26.0  # HTTP requests for font downloads
 multiprocessing-logging>=0.3.1  # Logging with multiprocessing support
 jsonschema>=4.0.0  # JSON validation
+
+# Faster R-CNN and PyTorch-related dependencies
+torchvision>=0.15.0  # For Faster R-CNN and model utilities
+tqdm>=4.64.0  # For progress bar visualization during training
+scipy>=1.8.0  # For additional mathematical computations
+
+# YOLOv5 alternative (if used)
+# ultralytics>=8.0.0  # For YOLOv5 or YOLOv8 support
+
+# Optional visualization tools
+matplotlib>=3.4.0  # For plotting and visualization
