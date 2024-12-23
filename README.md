@@ -113,6 +113,10 @@ Image preprocessing ensures accurate field detection and labeling, even for rota
 4. **Generate Final Label Files**:
    - For each image, bounding box coordinates and class IDs are finalized and saved as text files (`.txt`) for training with VietOCR.
 
+5. **Debug Visualization**:
+   - For each image, with their labels, a polygon of each class labels will be drawn as they visualizing the label post-processing, especially for verification and debugging purposes.
+   - Note that this shown that some automation labeling can be over / under lapping or incorrectly-positioned, however, not so many shows this.
+
 ---
 
 ### Step 5: Train the VietOCR Model
