@@ -25,6 +25,8 @@ Or using pip3:
 pip3 install -r requirements.txt
 ```
 
+---
+
 ### Step 2: Generate Synthetic Passport Data
 To create a dataset of **5000 synthetic passports**:
 
@@ -61,8 +63,6 @@ The final dataset consists of:
 - **1500 Handwritten Vietnamese Passports**
 
 Total: **5000 synthetic passport samples**
-
-### Updated README.md Sections: Data Preparation and Preprocess and Correct Image Orientation
 
 ---
 
@@ -112,6 +112,8 @@ Image preprocessing ensures accurate field detection and labeling, even for rota
 
 4. **Generate Final Label Files**:
    - For each image, bounding box coordinates and class IDs are finalized and saved as text files (`.txt`) for training with VietOCR.
+
+---
 
 ### Step 5: Train the VietOCR Model
 Train the OCR model using the prepared dataset:
@@ -181,6 +183,7 @@ python inference_orientation_correct.py
 └── LICENSE
 ```
  
+---
 
 ## Analysis of Training Results
 1. **Training and Validation Loss**:
@@ -203,10 +206,12 @@ python inference_orientation_correct.py
 - **imgaug**: Augmentation for imperfection mutants.
 - **PyTorch**: Training deep learning models.
 
+---
 
 ## Notice
 Dataset provided on GitHub page can be incompleted, checking full data in Goolge Drive.
 
+---
 
 ## Google Collab Notebook
 [Training Collab URL](https://colab.research.google.com/drive/1sZmpSJiAb6y3ciqwRzJPdgVEjk7bLZt3?usp=sharing)
@@ -217,6 +222,7 @@ Dataset provided on GitHub page can be incompleted, checking full data in Goolge
 
 [Annotate Image with PaddleOCR (older model)](https://colab.research.google.com/drive/1wgoY08-Dmp7hmBYhXVni3iFTfYclITht?usp=sharing)
 
+---
 
 ## Google Drive Dataset
 [Dataset](https://drive.google.com/drive/folders/1WUuXciJYsFgsY81KnibXRKDxninKg0bu?usp=sharing)
