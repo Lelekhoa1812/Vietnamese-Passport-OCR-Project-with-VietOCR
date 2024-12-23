@@ -163,12 +163,16 @@ python inference_orientation_correct.py
 ```plaintext
 ├──PassportDataset/
 │   ├── train/
-│       ├── crops/
+│         ├── images/ # All images used for training
+│         ├── labels/ # All labels used for training
+│         ├── debug_images/ 
 │       └── train_annotation.txt
 │   ├── test/
-│       ├── crops/
+│         ├── images/ # All images used for testing
+│         ├── labels/ # All labels used for testing
+│         ├── debug_images/ 
 │       └── test_annotation.txt
-├── synthetic_passports/   # 5000 generated synthetic passports
+├── synthetic_passports/             # 5000 generated synthetic passports
 │   └── labels.txt                   # All labels of the faked data generated previously.
 │   └── passport_index.jpg           # Generic passport
 │   └── vpassport_index.jpg          # Vietnamese passport (both printed and handwritten)
@@ -181,6 +185,8 @@ python inference_orientation_correct.py
 ├── mutated_passports/     # Imperfection mutants (noise, lighting, etc.)
 ├── weights/
 │   └── passportocr.pth    # Trained VietOCR model weights
+├── SyntheticPassportGeneration.ipynb
+├── ImageProcessing.ipynb
 ├── patrick_hand_font/     # Hand written font
 ├── requirements.txt       # Necessary imports
 ├── README
