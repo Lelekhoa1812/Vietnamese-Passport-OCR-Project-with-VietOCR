@@ -62,18 +62,62 @@ The final dataset consists of:
 
 Total: **5000 synthetic passport samples**
 
-### Step 3: Data Preparation
-Prepare the dataset for OCR training:
-- Split the dataset into training and testing sets (80% training, 20% testing).
-- Generate cropped text regions and corresponding ground-truth annotations.
+### Updated README.md Sections: Data Preparation and Preprocess and Correct Image Orientation
 
-Run the provided scripts to organize and preprocess the dataset.
+---
+
+### Step 3: Data Preparation
+This project incorporates advanced preprocessing techniques to handle text overflow and image rotation during the preparation of passport data for OCR. The steps involved in data preparation are as follows:
+
+1. **Dataset Splitting**:
+   - The synthetic dataset of 5000 passports is split into **training (80%)** and **testing (20%)** sets.
+
+2. **Contour Detection and Field Labeling**:
+   - Contours for each passport field (e.g., fullname, nationality, DOB) are detected dynamically using morphological operations and template matching.
+   - Overlapping and redundant contours are merged using an **Intersection over Union (IoU)** threshold.
+
+3. **Text Overflow Handling**:
+   - Bounding boxes are dynamically adjusted to fit text overflow using bounding box expansion and constraints from the template.
+   - Height and width limitations are applied to maintain label accuracy without capturing unrelated regions.
+
+4. **Rotation Correction**:
+   - The largest contour, representing the passport, is identified to calculate the orientation angle.
+   - Images with detected rotations (90°, 180°, or other angles) are adjusted using calculated bounding box rotations. Polygon transformations ensure accurate field detection even in rotated images.
+
+5. **Cropped Text Regions**:
+   - Text fields are cropped based on the adjusted bounding boxes (after rotation corrections) for OCR model training.
+   - Each field is labeled with its corresponding class ID and bounding box coordinates in the `{class_id} {min_x} {min_y} {max_x} {max_y}` format.
+
+6. **Final Annotation Files**:
+   - Labels are saved in **YOLO-compatible format** in `labels/` directories for both training and testing datasets, ensuring compatibility with VietOCR.
+
+---
 
 ### Step 4: Preprocess and Correct Image Orientation
-Use the following script to correct image orientations:
-```python
-python preprocess_images.py
-```
+Image preprocessing ensures accurate field detection and labeling, even for rotated or misaligned passport images. The key steps include:
+
+1. **Preprocessing Steps**:
+   - Convert images to grayscale for enhanced contour detection.
+   - Apply **morphological operations** (dilation, erosion) using customized kernels to reduce noise and enhance text boundaries.
+
+2. **Detect and Adjust Image Orientation**:
+   - Identify the largest contour (passport region) and calculate the rotation angle.
+   - Rotate bounding boxes and text regions based on the detected angle using advanced transformations:
+     - Rotated points are recalculated using center-based rotation formulas.
+     - Bounding boxes are adjusted to align with the rotated image.
+
+3. **Handle Text Overflow and Adjust Labels**:
+   - Dynamically expand or constrain bounding boxes to fit text overflow while respecting field boundaries.
+   - Add small offsets to polygons for robustness during field detection.
+
+4. **Generate Final Label Files**:
+   - For each image, bounding box coordinates and class IDs are finalized and saved as text files (`.txt`) for training with VietOCR.
+
+The updated preprocessing ensures that both **rotated** and **non-rotated images** are handled seamlessly, improving accuracy during OCR training and inference.
+
+---
+
+This update reflects the improved techniques used for handling image rotation, text overflow, and precise bounding box adjustments during data preparation.
 
 ### Step 5: Train the VietOCR Model
 Train the OCR model using the prepared dataset:
@@ -174,6 +218,8 @@ Dataset provided on GitHub page can be incompleted, checking full data in Goolge
 [Training Collab URL](https://colab.research.google.com/drive/1sZmpSJiAb6y3ciqwRzJPdgVEjk7bLZt3?usp=sharing)
 
 [Synthetic Passport Generation](https://colab.research.google.com/drive/1Al4w8ccJxCnMTSFeYEuMXewpzhBO8AgF?usp=sharing)
+
+[Image Processing](https://colab.research.google.com/drive/1jHqpCz5wibngOJPGWFf7s15Br0ck3XiI?usp=sharing)
 
 [Annotate Image with PaddleOCR (older model)](https://colab.research.google.com/drive/1wgoY08-Dmp7hmBYhXVni3iFTfYclITht?usp=sharing)
 
