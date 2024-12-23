@@ -113,12 +113,6 @@ Image preprocessing ensures accurate field detection and labeling, even for rota
 4. **Generate Final Label Files**:
    - For each image, bounding box coordinates and class IDs are finalized and saved as text files (`.txt`) for training with VietOCR.
 
-The updated preprocessing ensures that both **rotated** and **non-rotated images** are handled seamlessly, improving accuracy during OCR training and inference.
-
----
-
-This update reflects the improved techniques used for handling image rotation, text overflow, and precise bounding box adjustments during data preparation.
-
 ### Step 5: Train the VietOCR Model
 Train the OCR model using the prepared dataset:
 ```python
