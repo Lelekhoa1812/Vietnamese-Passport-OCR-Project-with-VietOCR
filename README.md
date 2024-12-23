@@ -161,17 +161,29 @@ python inference_orientation_correct.py
 
 ## Project Structure
 ```plaintext
-├──PassportDataset/
+├──PassportDataset (for Indian dataset)/
 │   ├── train/
-│         ├── images/ # All images used for training
-│         ├── labels/ # All labels used for training
-│         ├── debug_images/ 
+│         ├── img/ # All images used for training
+│         ├── crops/ # All cropped-images from label coordination 
 │       └── train_annotation.txt
+│       └── annotation.json
 │   ├── test/
-│         ├── images/ # All images used for testing
-│         ├── labels/ # All labels used for testing
-│         ├── debug_images/ 
+│         ├── img/ # All images used for testing
+│         ├── crops/ # All cropped-images from label coordination 
 │       └── test_annotation.txt
+│       └── annotation.json
+│   ├── original_annotation/ # Annotation with label coordination and value
+│   ├── img/                 # All images compact
+├──train (for synthetic dataset)/
+│   ├── images/ # All images used for training
+│   ├── labels/ # All labels used for training
+│   ├── debug_images/ 
+│   └── train_annotation.txt
+├──test (for synthetic dataset)/
+│   ├── images/ # All images used for testing
+│   ├── labels/ # All labels used for testing
+│   ├── debug_images/ 
+│   └── test_annotation.txt
 ├── synthetic_passports/             # 5000 generated synthetic passports
 │   └── labels.txt                   # All labels of the faked data generated previously.
 │   └── passport_index.jpg           # Generic passport
