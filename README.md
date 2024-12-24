@@ -120,6 +120,12 @@ Image preprocessing ensures accurate field detection and labeling, even for rota
    - For each image, with their labels, a polygon of each class labels will be drawn as they visualizing the label post-processing, especially for verification and debugging purposes.
    - Note that this shown that some automation labeling can be over / under lapping or incorrectly-positioned, however, not so many shows this.
 
+**Visualization Examples**  
+<img src="ioutput_image/2406.png" alt="vpassport_2061.jpg Image:\ Non-rotate, Dark-shade, Non-blurred, Handwritten font" style="width: 40%; max-width: 500px;">
+
+<img src="output_image/2061.png" alt="vpassport_2406.jpg Image:\ HighClockwise-rotate, Non-shade, Non-blurred, Arial font" style="width: 40%; max-width: 500px;">
+
+
 **Now included in** [ImageProcessing.ipynb](https://github.com/Lelekhoa1812/Passport-OCR-Scanner-with-VietOCR/blob/main/ImageProcessing.ipynb)
 
 ### Step 6: Train Faster R-CNN Model Detecting Input Field Position
