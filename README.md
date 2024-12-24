@@ -259,6 +259,37 @@ for epoch in range(num_epochs):
 
 **Now included in** [VietOCRProject.ipynb](https://github.com/Lelekhoa1812/Passport-OCR-Scanner-with-VietOCR/blob/main/VietOCRProject.ipynb)
 
+
+The model training process produces detailed results for each epoch, including loss and accuracy. The following table summarizes the evaluation results for the ResNet50-based Faster R-CNN model trained on the dataset:
+
+#### Evaluation Results
+
+| **Epoch** | **Loss** | **Accuracy** | **Best Model Saved** |
+|-----------|----------|--------------|-----------------------|
+| 1         | 0.4142   | 0.8843       | ✅                   |
+| 2         | 0.1273   | 0.8824       | ❌                   |
+| 3         | 0.0889   | 0.8875       | ✅                   |
+| 4         | 0.0708   | 0.8875       | ❌                   |
+| 5         | 0.0578   | 0.8875       | ❌                   |
+| 6         | 0.0477   | 0.8865       | ❌                   |
+| 7         | 0.0434   | 0.8875       | ❌                   |
+| 8         | 0.0396   | 0.8875       | ❌                   |
+| 9         | 0.0370   | 0.8875       | ❌                   |
+| 10        | 0.0350   | 0.8875       | ❌                   |
+| 11        | 0.0342   | 0.8875       | ❌                   |
+| 12        | 0.0330   | 0.8875       | ❌                   |
+| 13        | 0.0286   | 0.8875       | ❌                   |
+
+#### Observations:
+
+1. **Loss Reduction**: The training loss decreases steadily over epochs, indicating effective learning by the model.
+2. **Accuracy**: The accuracy improves and stabilizes around **88.75%**, surpassing the target of **70%**.
+3. **Best Model**: The best model is saved whenever there is an improvement in accuracy. The best-performing model achieved **88.75% accuracy** at epoch 3 and was saved.
+
+#### Conclusion:
+
+The model demonstrates excellent performance, achieving high accuracy while effectively detecting input fields and their classes. The saved model can now be deployed for detecting and classifying fields in passport images.
+
 ---
 
 ### Step 7: Train the VietOCR Model
