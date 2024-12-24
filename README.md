@@ -8,7 +8,8 @@ The project includes:
 - **Data Preparation**: Splitting the dataset into training and testing sets, generating synthetic passport data, cropping text regions from images, correcting their orientation, and creating annotation files compatible with VietOCR.
 - **OCR Model Training**: Training the OCR model on synthetic passport fields using the `vgg_transformer` configuration.
 - **Synthetic Data Generation**: A hybrid approach using Python scripts to generate **5000 synthetic passport samples**.
-- **Input Orientation Handling**: Automatic correction of image orientation (90°, 180°, 270° rotations) to ensure proper alignment for OCR.
+- **Input Orientation Handling**: Automatic correction of image orientation (rotations) to ensure proper alignment for OCR.
+- **Field Overflow Handling**: Automatic correction overflow field from original labelling
 - **Evaluation**: Evaluating model performance on the test dataset to measure accuracy.
 
 
@@ -35,7 +36,7 @@ Use `SyntheticPassportGeneration.py` to generate generic passports with random n
 ```bash
 python SyntheticPassportGeneration.py
 ```
-- Fields include: fullname, nationality, date of birth, place of birth, gender, and passport ID.
+- Fields include: fullname, nationality, dob (date of birth), pob (place of birth), gender, cmnd (Vietnamese id), nameid (e.g. VNM>YOUR>FULL>NAME) passportid and passportid2 (passport ID).
 - 2000 samples are generated and annotated with bounding boxes for OCR.
 
 #### 2. **Vietnamese Passport Generation** (1500 Printed and 1500 Handwritten):
@@ -44,7 +45,7 @@ Use `VietnamesePassportGeneration.py` to generate **3000 Vietnamese passports** 
 python VietnamesePassportGeneration.py
 ```
 - Handwritten samples use handwriting-like fonts for added variability.
-- Fields are generated using random Vietnamese text to simulate realistic passport content.
+- Fields are generated using random Vietnamese text to simulate realistic passport content.  
 
 #### 3. **Add Real-World Imperfections**:
 To simulate real-world inconsistencies, such as rotation, noise, and lighting effects, use `GenerateImperfectionMutant.py`:
@@ -56,6 +57,8 @@ This script applies the following transformations to synthetic images:
 - **Angled**: Rotates the image to a random diagonal angle.
 - **Brightened**: Simulates over or under-lighting conditions.
 - **Mixed**: Applies a combination of 2 or 3 techniques mentioned, blur, angle, and brightness adjustments.
+
+**Now included in** [SyntheticPassportGeneration.ipynb](https://github.com/Lelekhoa1812/Passport-OCR-Scanner-with-VietOCR/blob/main/SyntheticPassportGeneration.ipynb)
 
 The final dataset consists of:
 - **2000 Generic Passports**
@@ -117,9 +120,154 @@ Image preprocessing ensures accurate field detection and labeling, even for rota
    - For each image, with their labels, a polygon of each class labels will be drawn as they visualizing the label post-processing, especially for verification and debugging purposes.
    - Note that this shown that some automation labeling can be over / under lapping or incorrectly-positioned, however, not so many shows this.
 
+**Now included in** [ImageProcessing.ipynb](https://github.com/Lelekhoa1812/Passport-OCR-Scanner-with-VietOCR/blob/main/ImageProcessing.ipynb)
+
+### Step 6: Train Faster R-CNN Model Detecting Input Field Position
+Here is the **Step 6** section for your `README.md` file:
+
 ---
 
-### Step 5: Train the VietOCR Model
+### Step 6: Train ResNet50 Model for Detecting Input Field Positions
+
+In this step, we train a Faster R-CNN model with a ResNet50 backbone to detect input fields and classify them into predefined categories. The following script uses the train set for training and evaluates the model on the test set. The best model is saved based on accuracy.
+
+#### Key Components of the Script:
+1. **Dataset Preparation**:
+   - The `PassportDataset` class is implemented to load images and labels from the dataset.
+   - Labels are in the format: `class_id, x_min, y_min, x_max, y_max`.
+
+2. **Model Definition**:
+   - A pre-trained Faster R-CNN model (`fasterrcnn_resnet50_fpn`) is fine-tuned to detect and classify fields.
+   - The model is modified to match the number of classes in the dataset.
+
+3. **Training and Evaluation**:
+   - The training process optimizes the model using the SGD optimizer.
+   - Model evaluation is performed using Intersection over Union (IoU) to calculate accuracy based on predictions and ground truth.
+
+4. **Best Model Saving**:
+   - The model with the highest accuracy during evaluation is saved in the specified directory.
+
+#### Script:
+```python
+import os
+import torch
+from torchvision.models.detection import fasterrcnn_resnet50_fpn
+from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
+from torchvision.transforms import functional as F
+from torch.utils.data import DataLoader, Dataset
+import cv2
+import json
+import numpy as np
+from tqdm import tqdm
+
+# Dataset Class
+class PassportDataset(Dataset):
+
+# Define Model
+def get_model(num_classes):
+    model = fasterrcnn_resnet50_fpn(pretrained=True)
+    in_features = model.roi_heads.box_predictor.cls_score.in_features
+    model.roi_heads.box_predictor = FastRCNNPredictor(in_features, num_classes)
+    return model
+
+# Training Loop
+def train_one_epoch(model, optimizer, data_loader, device):
+    model.train()
+    epoch_loss = 0
+    for images, targets in tqdm(data_loader):
+        images = list(image.to(device) for image in images)
+        targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
+
+        loss_dict = model(images, targets)
+        losses = sum(loss for loss in loss_dict.values())
+        epoch_loss += losses.item()
+
+        optimizer.zero_grad()
+        losses.backward()
+        optimizer.step()
+
+    return epoch_loss / len(data_loader)
+
+# Evaluate Model
+def evaluate_model(model, data_loader, device, iou_threshold=0.5):
+    """
+    Evaluate the model on the test dataset and calculate accuracy.
+    Accuracy is computed based on the IoU threshold.
+    """
+    model.eval()
+    total_predictions = 0
+    correct_predictions = 0
+
+    with torch.no_grad():
+        for images, targets in tqdm(data_loader):
+            images = list(image.to(device) for image in images)
+            outputs = model(images)
+
+            for i, output in enumerate(outputs):
+                pred_boxes = output['boxes'].cpu().numpy()
+                pred_labels = output['labels'].cpu().numpy()
+                gt_boxes = targets[i]['boxes'].cpu().numpy()
+                gt_labels = targets[i]['labels'].cpu().numpy()
+
+                for gt_box, gt_label in zip(gt_boxes, gt_labels):
+                    total_predictions += 1
+                    for pred_box, pred_label in zip(pred_boxes, pred_labels):
+                        if pred_label == gt_label:
+                            iou = compute_iou(gt_box, pred_box)
+                            if iou >= iou_threshold:
+                                correct_predictions += 1
+                                break
+
+    accuracy = correct_predictions / total_predictions if total_predictions > 0 else 0
+    return accuracy
+
+# Hyperparameters
+num_classes = 10  # Number of classes (including background)
+num_epochs = 20
+batch_size = 4
+learning_rate = 0.005
+
+# Prepare Dataset and Dataloader
+train_dataset = PassportDataset(train_image_dir, train_label_dir)
+test_dataset = PassportDataset(test_image_dir, test_label_dir)
+
+train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, collate_fn=lambda x: tuple(zip(*x)))
+test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, collate_fn=lambda x: tuple(zip(*x)))
+
+# Device
+device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+# Initialize Model
+model = get_model(num_classes).to(device)
+# Optimizer
+optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9, weight_decay=0.0005)
+
+# Train and Save Best Model
+best_accuracy = 0 # Initially 0 but will increment as it keeps training recursively
+for epoch in range(num_epochs):
+    train_loss = train_one_epoch(model, optimizer, train_loader, device)
+    print(f"Epoch {epoch + 1}, Loss: {train_loss:.4f}")
+
+    # Evaluate Accuracy
+    current_accuracy = evaluate_model(model, test_loader, device)
+    print(f"Epoch {epoch + 1}, Accuracy: {current_accuracy:.4f}")
+
+    # Save model (with best possible accuracy) if accuracy improves
+    if current_accuracy > best_accuracy:
+        best_accuracy = current_accuracy
+        torch.save(model.state_dict(), os.path.join(model_save_dir, f"best_model_{best_accuracy:.2f}%.pth"))
+        print(f"Saved Best Model with Accuracy: {best_accuracy:.2f}")
+```
+
+#### Notes:
+- This script is specifically tailored to handle labels in the format: `class_id, x_min, y_min, x_max, y_max`.
+- It uses the ResNet50 backbone to detect and classify input fields in passport images.
+- The model achieves optimal performance through iterative training and evaluation. The best model is saved as `best_model_{accuracy}.pth`.
+
+**Now included in** [VietOCRProject.ipynb](https://github.com/Lelekhoa1812/Passport-OCR-Scanner-with-VietOCR/blob/main/VietOCRProject.ipynb)
+
+---
+
+### Step 7: Train the VietOCR Model
 Train the OCR model using the prepared dataset:
 ```python
 from vietocr.tool.config import Cfg
@@ -149,7 +297,7 @@ trainer = Trainer(config, pretrained=True)
 trainer.train()
 ```
 
-### Step 6: Evaluate the Model
+### Step 8: Evaluate the Model
 Evaluate the trained model using the test dataset and provided evaluation scripts. Results include accuracy metrics and visualized predictions.
 
 
