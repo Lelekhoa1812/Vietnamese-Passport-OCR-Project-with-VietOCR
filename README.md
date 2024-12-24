@@ -121,11 +121,18 @@ Image preprocessing ensures accurate field detection and labeling, even for rota
    - Note that this shown that some automation labeling can be over / under lapping or incorrectly-positioned, however, not so many shows this.
 
 **Visualization Examples**  
-<img src="ioutput_image/2406.png" alt="vpassport_2061.jpg Image:
-Non-rotate, Dark-shade, Non-blurred, Handwritten font" style="width: 40%; max-width: 500px;">
+<img src="ioutput_image/2406.png" alt="vpassport_2061.jpg" style="width: 40%; max-width: 500px;">
+Image mutation types: Non-rotate, Dark-shade, Non-blurred, Handwritten font.  
+Accuracy: High.  
 
-<img src="output_image/2061.png" alt="vpassport_2406.jpg Image:
-HighClockwise-rotate, Non-shade, Non-blurred, Arial font" style="width: 40%; max-width: 500px;">
+<img src="output_image/2061.png" alt="vpassport_2406.jpg" style="width: 40%; max-width: 500px;">
+Image mutation types: HighClockwise-rotate, Non-shade, Non-blurred, Arial font.  
+Accuracy: High.  
+
+**Explanation:** 
+- Green Label visualizing the original label's coordinations.  
+- Red Label visualizing the adjusted label's coordinations without rotation.  
+- Blue Label visualizing the adjusted label's coordinations with rotation.  
 
 **Now included in** [ImageProcessing.ipynb](https://github.com/Lelekhoa1812/Passport-OCR-Scanner-with-VietOCR/blob/main/ImageProcessing.ipynb)
 
