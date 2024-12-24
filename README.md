@@ -123,12 +123,6 @@ Image preprocessing ensures accurate field detection and labeling, even for rota
 **Now included in** [ImageProcessing.ipynb](https://github.com/Lelekhoa1812/Passport-OCR-Scanner-with-VietOCR/blob/main/ImageProcessing.ipynb)
 
 ### Step 6: Train Faster R-CNN Model Detecting Input Field Position
-Here is the **Step 6** section for your `README.md` file:
-
----
-
-### Step 6: Train ResNet50 Model for Detecting Input Field Positions
-
 In this step, we train a Faster R-CNN model with a ResNet50 backbone to detect input fields and classify them into predefined categories. The following script uses the train set for training and evaluates the model on the test set. The best model is saved based on accuracy.
 
 #### Key Components of the Script:
