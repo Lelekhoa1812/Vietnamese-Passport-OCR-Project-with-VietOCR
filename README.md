@@ -121,13 +121,14 @@ Image preprocessing ensures accurate field detection and labeling, even for rota
    - Note that this shown that some automation labeling can be over / under lapping or incorrectly-positioned, however, not so many shows this.
 
 **Visualization Examples**  
-<img src="ioutput_image/2406.png" alt="vpassport_2061.jpg" style="width: 40%; max-width: 500px;">
-Image mutation types: Non-rotate, Dark-shade, Non-blurred, Handwritten font.  
-Accuracy: High.  
+<img src="output_image/2406.png" alt="vpassport_2061.jpg" style="width: 40%; max-width: 500px;">
+Image mutation types: Non-rotate, Dark-shade, Non-blurred, Handwritten font.\
+Accuracy: High.\
+
 
 <img src="output_image/2061.png" alt="vpassport_2406.jpg" style="width: 40%; max-width: 500px;">
-Image mutation types: HighClockwise-rotate, Non-shade, Non-blurred, Arial font.  
-Accuracy: High.  
+Image mutation types: HighClockwise-rotate, Non-shade, Non-blurred, Arial font.\  
+Accuracy: High.\ 
 
 **Explanation:** 
 - Green Label visualizing the original label's coordinations.  
@@ -301,6 +302,7 @@ The model training process produces detailed results for each epoch, including l
 3. **Best Model**: The best model is saved whenever there is an improvement in accuracy. The best-performing model achieved **88.75% accuracy** at epoch 3 and was saved.
 
 <img src="output_image/predict_vpassport_2879.png" alt="Prediction on Image vpassport_2879.jpg" style="width: 40%; max-width: 500px;">
+Visualization prediction for sample vpassport_2879.jpg.\
 
 #### Conclusion:
 
