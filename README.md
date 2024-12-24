@@ -121,10 +121,11 @@ Image preprocessing ensures accurate field detection and labeling, even for rota
    - Note that this shown that some automation labeling can be over / under lapping or incorrectly-positioned, however, not so many shows this.
 
 **Visualization Examples**  
-<img src="ioutput_image/2406.png" alt="vpassport_2061.jpg Image:\ Non-rotate, Dark-shade, Non-blurred, Handwritten font" style="width: 40%; max-width: 500px;">
+<img src="ioutput_image/2406.png" alt="vpassport_2061.jpg Image:
+Non-rotate, Dark-shade, Non-blurred, Handwritten font" style="width: 40%; max-width: 500px;">
 
-<img src="output_image/2061.png" alt="vpassport_2406.jpg Image:\ HighClockwise-rotate, Non-shade, Non-blurred, Arial font" style="width: 40%; max-width: 500px;">
-
+<img src="output_image/2061.png" alt="vpassport_2406.jpg Image:
+HighClockwise-rotate, Non-shade, Non-blurred, Arial font" style="width: 40%; max-width: 500px;">
 
 **Now included in** [ImageProcessing.ipynb](https://github.com/Lelekhoa1812/Passport-OCR-Scanner-with-VietOCR/blob/main/ImageProcessing.ipynb)
 
@@ -291,6 +292,8 @@ The model training process produces detailed results for each epoch, including l
 1. **Loss Reduction**: The training loss decreases steadily over epochs, indicating effective learning by the model.
 2. **Accuracy**: The accuracy improves and stabilizes around **88.75%**, surpassing the target of **70%**.
 3. **Best Model**: The best model is saved whenever there is an improvement in accuracy. The best-performing model achieved **88.75% accuracy** at epoch 3 and was saved.
+
+<img src="output_image/predict_vpassport_2879.png" alt="Prediction on Image vpassport_2879.jpg" style="width: 40%; max-width: 500px;">
 
 #### Conclusion:
 
