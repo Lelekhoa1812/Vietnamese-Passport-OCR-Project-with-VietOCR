@@ -2,7 +2,7 @@
 
 
 ## Project Overview
-This project implements an OCR (Optical Character Recognition) scanner for extracting key fields from passport images, such as names, date of birth, country, gender, and passport number. The system leverages the power of [VietOCR](https://github.com/pbcquoc/vietocr) for training and testing on a custom dataset formatted in COCO-style annotations.
+This project implements an OCR (Optical Character Recognition) scanner for extracting key fields from passport images, such as fullname, dob (date of birth), country, pob (place of birth), gender, cmnd (Vietnamese ID number), nameid (VNM>YOUR>FULL>NAME) and passportid (passport number). The system leverages the power of [VietOCR](https://github.com/pbcquoc/vietocr) for training and testing on a custom dataset formatted in COCO-style annotations.
 
 The project includes:
 - **Data Preparation**: Splitting the dataset into training and testing sets, generating synthetic passport data, cropping text regions from images, correcting their orientation, and creating annotation files compatible with VietOCR.
@@ -12,6 +12,11 @@ The project includes:
 - **Field Overflow Handling**: Automatic correction overflow field from original labelling
 - **Evaluation**: Evaluating model performance on the test dataset to measure accuracy.
 
+---
+
+## Project Datasets
+- This project focus on implementing solution for the [Synthetic Dataset](https://github.com/Lelekhoa1812/Passport-OCR-Scanner-with-VietOCR/blob/main/synthetic_passport)
+- Optionally also deploys with the [Indian Passport Dataset](https://github.com/iAmmarTahir/MASK-RCNN-Dataset/tree/master/IndPass/Augmented) or find it [locally](https://github.com/Lelekhoa1812/Passport-OCR-Scanner-with-VietOCR/blob/main/PassportDataset) in this repo
 
 ## Installation
 
@@ -342,6 +347,10 @@ trainer = Trainer(config, pretrained=True)
 trainer.train()
 ```
 
+**Now included in** [VietOCRProject.ipynb](https://github.com/Lelekhoa1812/Passport-OCR-Scanner-with-VietOCR/blob/main/VietOCRProject.ipynb)
+
+If you wish not to train Text detection model manually, download pre-trained weight from [here](vgg_transformer).  
+
 ### Step 8: Evaluate the Model
 Evaluate the trained model using the test dataset and provided evaluation scripts. Results include accuracy metrics and visualized predictions.
 
@@ -350,7 +359,8 @@ Evaluate the trained model using the test dataset and provided evaluation script
 Use the following script to perform inference with real-time orientation correction:
 ```python
 python inference_orientation_correct.py
-```
+```  
+Future deployment on FE allowing user directly import/scan image with responsive messages.  
 
 ## Project Structure
 ```plaintext
@@ -367,14 +377,18 @@ python inference_orientation_correct.py
 │       └── annotation.json
 │   ├── original_annotation/ # Annotation with label coordination and value
 │   ├── img/                 # All images compact
-├──train (for synthetic dataset)/
+├──train (for Synthetic dataset)/
 │   ├── images/ # All images used for training
 │   ├── labels/ # All labels used for training
+│   ├── models/ # All models used for training
+│       └── best_model_ba_bl.pth      # Best model trained with optimal accuracy and loss metric in filename
+│       └── text_detection_weight.pth # Text detection model supported by VietOCR
 │   ├── debug_images/ 
 │   └── train_annotation.txt
 ├──test (for synthetic dataset)/
 │   ├── images/ # All images used for testing
 │   ├── labels/ # All labels used for testing
+│   ├── predicted_text # Final detection output of text in JSON format
 │   ├── debug_images/ 
 │   └── test_annotation.txt
 ├── synthetic_passports/             # 5000 generated synthetic passports
@@ -391,7 +405,8 @@ python inference_orientation_correct.py
 ├── weights/
 │   └── passportocr.pth    # Trained VietOCR model weights
 ├── SyntheticPassportGeneration.ipynb
-├── ImageProcessing.ipynb
+├── ImageProcessing.ipynb  # Pocessing images applying different techniques to prepare labels
+├── VietOCRProject.ipynb   # Training and prediction
 ├── patrick_hand_font/     # Hand written font
 ├── requirements.txt       # Necessary imports
 ├── README
@@ -435,7 +450,7 @@ Dataset provided on GitHub page can be incompleted, checking full data in Goolge
 
 [Image Processing](https://colab.research.google.com/drive/1jHqpCz5wibngOJPGWFf7s15Br0ck3XiI?usp=sharing)
 
-[Annotate Image with PaddleOCR (older model)](https://colab.research.google.com/drive/1wgoY08-Dmp7hmBYhXVni3iFTfYclITht?usp=sharing)
+[Annotate Image with PaddleOCR (only for Indian Passport Dataset)](https://colab.research.google.com/drive/1wgoY08-Dmp7hmBYhXVni3iFTfYclITht?usp=sharing)
 
 ---
 
