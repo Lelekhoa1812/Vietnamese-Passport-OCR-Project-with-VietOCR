@@ -126,16 +126,14 @@ Image preprocessing ensures accurate field detection and labeling, even for rota
    - Note that this shown that some automation labeling can be over / under lapping or incorrectly-positioned, however, not so many shows this.
 
 **Visualization Examples**  
-<img src="output_image/2406.png" alt="vpassport_2061.jpg" style="width: 40%; max-width: 500px;">   
+<img src="output_image/2061.png" alt="vpassport_2061.jpg" style="width: 40%; max-width: 500px;">   
+Image mutation types: Non-rotate, Dark-shade, Non-blurred, Handwritten font.  
+Accuracy: High.
 
-Image mutation types: Non-rotate, Dark-shade, Non-blurred, Handwritten font.   
-Accuracy: High.   
+<img src="output_image/2406.png" alt="vpassport_2406.jpg" style="width: 40%; max-width: 500px;">   
 
-
-<img src="output_image/2061.png" alt="vpassport_2406.jpg" style="width: 40%; max-width: 500px;">   
-
-Image mutation types: HighClockwise-rotate, Non-shade, Non-blurred, Arial font.   
-Accuracy: High.   
+Image mutation types: HighClockwise-rotate, Non-shade, Non-blurred, Arial font.  
+Accuracy: High.
 
 **Explanation:** 
 - Green Label visualizing the original label's coordinations.  
@@ -279,6 +277,15 @@ for epoch in range(num_epochs):
 - It uses the ResNet50 backbone to detect and classify input fields in passport images.
 - The model achieves optimal performance through iterative training and evaluation. The best model is saved as `best_model_{accuracy}.pth`.
 
+
+**Pre-training adapted labellings**
+<img src="output_image/2370.png" alt="vpassport_2370.jpg" style="width: 40%; max-width: 500px;">   
+Resketch on image vpassport_2370.jpg for field detection training.  
+
+<img src="output_image/1569.png" alt="vpassport_1569.jpg" style="width: 40%; max-width: 500px;">   
+Resketch on image vpassport_1569.jpg for field detection training.    
+
+
 **Now included in** [VietOCRProject.ipynb](https://github.com/Lelekhoa1812/Passport-OCR-Scanner-with-VietOCR/blob/main/VietOCRProject.ipynb)
 
 
@@ -308,8 +315,16 @@ The model training process produces detailed results for each epoch, including l
 2. **Accuracy**: The accuracy improves and stabilizes around **88.75%**, surpassing the target of **70%**.
 3. **Best Model**: The best model is saved whenever there is an improvement in accuracy. The best-performing model achieved **88.75% accuracy** at epoch 3 and was saved.
 
-<img src="output_image/predict_vpassport_2879.png" alt="Prediction on Image vpassport_2879.jpg" style="width: 40%; max-width: 500px;">
-Visualization prediction for sample vpassport_2879.jpg.
+<img src="output_image/2893.png" alt="vpassport_2893.jpg" style="width: 40%; max-width: 500px;">   
+
+Visualization prediction for sample vpassport_2893.jpg.  
+Image mutation types: High-Anti-Clockwise-rotate, Light-shade, Non-blurred, Handwritten font.   
+Accuracy: Medium.   
+
+<img src="output_image/288.png" alt="vpassport_288.jpg" style="width: 40%; max-width: 500px;">   
+Visualization prediction for sample vpassport_288.jpg.  
+Image mutation types: LowClockwise-rotate, Dark-shade, Low-blurred, Arial Bold font.   
+Accuracy: High.  
 
 #### Conclusion:
 
