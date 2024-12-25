@@ -278,7 +278,7 @@ for epoch in range(num_epochs):
 - The model achieves optimal performance through iterative training and evaluation. The best model is saved as `best_model_{accuracy}.pth`.
 
 
-**Pre-training adapted labellings**
+**Pre-training adapted labellings**  
 <img src="output_image/2370.png" alt="vpassport_2370.jpg" style="width: 40%; max-width: 500px;">   
 Resketch on image vpassport_2370.jpg for field detection training.  
 
@@ -367,8 +367,14 @@ trainer.train()
 If you wish not to train Text detection model manually, download pre-trained weight from [here](vgg_transformer).  
 
 ### Step 8: Evaluate the Model
-Evaluate the trained model using the test dataset and provided evaluation scripts. Results include accuracy metrics and visualized predictions.
+Evaluate the trained model using the test dataset and provided evaluation scripts. Results include accuracy metrics and visualized predictions.  
 
+**Example Output in JSON Format**
+
+<img src="output_image/predicted_text.png" alt="predicted_text" style="width: 40%; max-width: 500px;">   
+
+- Example final output result with input image and outcome of relative classes and values in JSON format.
+- Future integration with Front End via API service.  
 
 ## Inference with Orientation Correction
 Use the following script to perform inference with real-time orientation correction:
